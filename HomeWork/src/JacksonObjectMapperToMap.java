@@ -30,5 +30,8 @@ public class JacksonObjectMapperToMap {
 		//another way
 		myMap = objectMapper.readValue(mapData, new TypeReference<HashMap<String,String>>() {});
 		System.out.println("Map using TypeReference: " + myMap);
+		
+		//ukazka ako vyberat zo zoznamu
+		System.out.println("---> " + myMap.get("city"));
 	}		
 }

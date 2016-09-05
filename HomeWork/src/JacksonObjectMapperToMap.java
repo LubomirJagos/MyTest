@@ -20,8 +20,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class JacksonObjectMapperToMap {
 	public static void main(String[] args) throws IOException {
 		//converting json to Map
-		byte[] mapData = Files.readAllBytes(Paths.get("/Users/jagoslub/EclipseJavaTry_1/HomeWork/src/data.txt"));
-		Map<String,String> myMap = new HashMap<String, String>();
+		byte[] mapData = Files.readAllBytes(Paths.get("/Users/kolargab/EclipseJavaTry_1/HomeWork/src/data.txt"));
+		List<Employee> myMap = new ArrayList<Employee>>();
 	
 		ObjectMapper objectMapper = new ObjectMapper();
 		myMap = objectMapper.readValue(mapData, HashMap.class);

@@ -17,15 +17,13 @@ public class EchoClient {
 		// String hostName = args[0];
 		// int portNumber = Integer.parseInt(args[1]);
 		ObjectMapper mapper = new ObjectMapper();
-		String jsonString = "{\"name\":\"Gabi\",\"myMessage\":\"Gabimessage\"}";
+		String jsonString = "{\"name\":\"Gabi\",\"myMessage\":\"Gabi message\"}";
 		System.out.println(jsonString);
 		// map json to message
 
 		try {
 			Message msg = mapper.readValue(jsonString, Message.class);
-
 			System.out.println(msg);
-
 			mapper.enable(SerializationFeature.INDENT_OUTPUT);
 			jsonString = mapper.writeValueAsString(msg);
 

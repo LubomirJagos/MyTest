@@ -1,6 +1,6 @@
 class Message  {
-	private String name;
-	private String myMessage;
+	private String name;  //user name
+	private String myMessage;  //message
 
 	public Message() {
 	}
@@ -22,6 +22,6 @@ class Message  {
 	}
 
 	public String toString() {
-		return "Message [ name: " + name + ", sais: " + myMessage + " ]";
+		return "Message [ name: " + name + ", says: " + myMessage + " ]";
 	}
 }

@@ -13,7 +13,6 @@ import javax.xml.transform.stream.*;
 @ServiceMode(value = Service.Mode.PAYLOAD)
 public class MyOfficialHttpServer implements Provider<Source> {
 
-	@Produces("text/html")
 	public Source invoke(Source request) {
         return  new StreamSource(new StringReader("<html><head><title>Experimental server</title></head><body><h1>Hello world!</h1><p>This is responese from our test HTTPServer just to see how it behaves...</p></body></html>"));
     }

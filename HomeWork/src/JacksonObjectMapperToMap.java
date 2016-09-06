@@ -21,14 +21,14 @@ public class JacksonObjectMapperToMap {
 	public static void main(String[] args) throws IOException {
 		//converting json to Map
 		byte[] mapData = Files.readAllBytes(Paths.get("/Users/kolargab/EclipseJavaTry_1/HomeWork/src/data.txt"));
-		List<Employee> myMap = new ArrayList<Employee>>();
+		List<Employee> myList = new ArrayList<Employee>();
 	
 		ObjectMapper objectMapper = new ObjectMapper();
-		myMap = objectMapper.readValue(mapData, HashMap.class);
-		System.out.println("Map is: " + myMap);
+		myList = objectMapper.readValue(mapData, ArrayList.class);
+		System.out.println("List is: " + myList);
 	
 		//another way
-		myMap = objectMapper.readValue(mapData, new TypeReference<HashMap<String,String>>() {});
+		myList = objectMapper.readValue(mapData, new TypeReference<ArrayList<Employee>>() {});
 		System.out.println("Map using TypeReference: " + myMap);
 		
 		//ukazka ako vyberat zo zoznamu

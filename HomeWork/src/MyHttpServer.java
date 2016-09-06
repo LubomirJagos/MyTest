@@ -6,19 +6,25 @@
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.util.Stack;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 public class MyHttpServer {
 
-    public static void main(String[] args) throws Exception {
+	private static final int MESSAGE_QUEUE_LENGTH = 5; 
+	private static Stack<Message> messageQueue = new Stack<Message>();
+
+	public static void main(String[] args) throws Exception {
         
     	//vytvorenie serveru beziaceho na porte 7713
     	HttpServer server = HttpServer.create(new InetSocketAddress(7713), 0);
         
-    	server.createContext("/test", new MyHandler());
+    	server.createContext("/sendMessage", new MyHandler());
+    	server.createContext("/getAllMessages", new MyHandler2());
         server.setExecutor(null); 													// creates a default executor
         server.start();
     }
@@ -33,7 +39,24 @@ public class MyHttpServer {
     static class MyHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
-            String response = "<html><head><title>Experimental server</title></head><body><h1>Hello world!</h1><p>This is responese from our test HTTPServer just to see how it behaves...</p></body></html>";
+/*
+        	Message msg = mapper.readValue(inputLine, Message.class);
+			System.out.println(msg);
+			mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+			//System.out.println("Name: " + msg.getName());						//debug output name
+			//System.out.println("Content: " + msg.getMyMessage());				//debug output msg content
+			
+			messageQueue.push( msg);												//store message in queue
+			if (messageQueue.size() > MESSAGE_QUEUE_LENGTH) messageQueue.removeElementAt(0);
+			System.out.println( messageQueue);
+*/
+
+        	
+        	//vypis parametrov
+        	System.out.println(t.getRequestURI().getQuery());
+        	
+        	String response = "<html><head><title>Experimental server</title></head><body><h1>Hello world!</h1><p>This is responese from our test HTTPServer just to see how it behaves...</p></body></html>";
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
@@ -41,6 +64,17 @@ public class MyHttpServer {
         }
     }
     
+    static class MyHandler2 implements HttpHandler {
+        @Override
+        public void handle(HttpExchange t) throws IOException {
+            String response = "<html><head><title>Experimental server</title></head><body><h1>End of world!</h1><p>...not too much to say about...</p></body></html>";
+            t.sendResponseHeaders(200, response.length());
+            OutputStream os = t.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        }
+    }
+
     /**
      * Len na precvicenie dokumentacie.
      */

@@ -4,14 +4,13 @@
  */
 
 import java.io.*;
-
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.util.List;
 import java.util.Stack;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -27,7 +26,9 @@ public class MyHttpServer {
 		mapper = new ObjectMapper();
 		
     	//vytvorenie serveru beziaceho na porte 7713
-    	HttpServer server = HttpServer.create(new InetSocketAddress(7713), 0);
+		int portNumber = Integer.parseInt( args[0]);
+		System.out.println("Argument 0: " + Integer.toString(portNumber));
+    	HttpServer server = HttpServer.create(new InetSocketAddress(portNumber), 0);
         
     	server.createContext("/sendMessage", new MyHandler());
     	server.createContext("/getAllMessages", new MyHandler2());
@@ -70,7 +71,7 @@ public class MyHttpServer {
 			System.out.println( messageQueue);													//kontrolny vypis
 			
 			//odpoved servru na poziadavok
-			String response = "<html><head><title>Experimental server</title></head><body><h1>Hello world!</h1><p>This is responese from our test HTTPServer just to see how it behaves...</p></body></html>";
+			String response = "<html><head><title>Experimental Message Server</title></head><body>OK message stored.</body></html>";
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
@@ -81,7 +82,11 @@ public class MyHttpServer {
     static class MyHandler2 implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
-            String response = "<html><head><title>Experimental server</title></head><body><h1>End of world!</h1><p>...not too much to say about...</p></body></html>";
+        	String outString;
+        	//mapper.writeValue( new File("server_aux_messages_list.txt"), messageQueue);
+        	String response = mapper.writeValueAsString(messageQueue);
+        	
+        	//String response = "<html><head><title>Experimental erver</title></head><body><h1>End of world!</h1><p>...not too much to say about...</p></body></html>";
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());

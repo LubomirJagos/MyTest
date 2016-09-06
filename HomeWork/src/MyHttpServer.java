@@ -3,11 +3,14 @@
  *	Tento priklad pouziva volanie balickov "sun" ktore sa mozu menit a nie su prenositelne napriec vsetkymi JRE. 
  */
 
+import java.io.*;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.Stack;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -17,9 +20,12 @@ public class MyHttpServer {
 
 	private static final int MESSAGE_QUEUE_LENGTH = 5; 
 	private static Stack<Message> messageQueue = new Stack<Message>();
-
+	private static ObjectMapper mapper; 
+	
 	public static void main(String[] args) throws Exception {
         
+		mapper = new ObjectMapper();
+		
     	//vytvorenie serveru beziaceho na porte 7713
     	HttpServer server = HttpServer.create(new InetSocketAddress(7713), 0);
         
@@ -39,24 +45,32 @@ public class MyHttpServer {
     static class MyHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
-/*
-        	Message msg = mapper.readValue(inputLine, Message.class);
-			System.out.println(msg);
-			mapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-			//System.out.println("Name: " + msg.getName());						//debug output name
-			//System.out.println("Content: " + msg.getMyMessage());				//debug output msg content
-			
-			messageQueue.push( msg);												//store message in queue
-			if (messageQueue.size() > MESSAGE_QUEUE_LENGTH) messageQueue.removeElementAt(0);
-			System.out.println( messageQueue);
-*/
-
+        	
+        	/**
+        	 * Ziskavanie parametrov za otaznikom napr. www.mySuperPage.cz?parameter1=hodnota1&parameter2=hodnota2
+        	 * sa robi t.getRequestURI().getQuery()
+        	 * Ziskavanie cesty, teda www.mySuperPage.cz/adresar1/adresar2
+        	 * sa robi t.getRequestURI().getPath()
+        	 */
         	
         	//vypis parametrov
-        	System.out.println(t.getRequestURI().getQuery());
+        	System.out.println("HTTP Request path: " + t.getRequestURI().getPath());
+        	System.out.println("HTTP Request query: " + t.getRequestURI().getQuery());
+
+        	//nacitanie tela prijatej spravy cez POST
+        	InputStreamReader isr =  new InputStreamReader(t.getRequestBody(),"utf-8");
+        	BufferedReader br = new BufferedReader(isr);
+        	String postParams = br.readLine();
+        	System.out.println( postParams);													//kontrolny vypis
         	
-        	String response = "<html><head><title>Experimental server</title></head><body><h1>Hello world!</h1><p>This is responese from our test HTTPServer just to see how it behaves...</p></body></html>";
+        	//rozobratie prijatej spravy a jej ulozenie do zasobniku
+        	Message msg = mapper.readValue(postParams, Message.class);			
+			messageQueue.push( msg);															//store message in queue
+			if (messageQueue.size() > MESSAGE_QUEUE_LENGTH) messageQueue.removeElementAt(0);
+			System.out.println( messageQueue);													//kontrolny vypis
+			
+			//odpoved servru na poziadavok
+			String response = "<html><head><title>Experimental server</title></head><body><h1>Hello world!</h1><p>This is responese from our test HTTPServer just to see how it behaves...</p></body></html>";
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());

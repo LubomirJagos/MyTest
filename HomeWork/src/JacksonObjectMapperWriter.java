@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class JacksonObjectMapperWriter {
 
 	public static void main(String[] args) throws IOException {
-		byte[] jsonData = Files.readAllBytes(Paths.get("/Users/jagoslub/EclipseJavaTry_1/HomeWork/src/employee.txt"));
+		byte[] jsonData = Files.readAllBytes(Paths.get("employee.txt"));
 	
 		ObjectMapper objectMapper = new ObjectMapper();
 	
@@ -34,7 +34,7 @@ public class JacksonObjectMapperWriter {
 		//remove existing key
 		((ObjectNode) rootNode).remove("role");
 		((ObjectNode) rootNode).remove("properties");
-		objectMapper.writeValue(new File("/Users/jagoslub/EclipseJavaTry_1/HomeWork/src/updated_emp.txt"), rootNode);
+		objectMapper.writeValue(new File("updated_emp.txt"), rootNode);
 		
 		System.out.println("JacksonObjectMapperWriter finished.");
 	}

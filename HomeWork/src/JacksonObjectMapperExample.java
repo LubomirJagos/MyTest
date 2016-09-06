@@ -21,7 +21,7 @@ public class JacksonObjectMapperExample {
 	public static void main(String[] args) throws IOException {
 		
 		//read json file data to String
-		byte[] jsonData = Files.readAllBytes(Paths.get("/Users/jagoslub/EclipseJavaTry_1/HomeWork/src/employee.txt"));
+		byte[] jsonData = Files.readAllBytes(Paths.get("employee.txt"));
 		
 		//create ObjectMapper instance
 		ObjectMapper objectMapper = new ObjectMapper();

@@ -1,0 +1,6 @@
+[
+	{"name":"aaa","myMessage":"aaa"},
+	{"name":"bbb","myMessage":"bbb"},
+	{"name":"ccc","myMessage":"ccc"},
+	{"name":"ddd","myMessage":"ddd"}
+]

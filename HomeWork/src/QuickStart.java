@@ -1,3 +1,4 @@
+
 /*
  * ====================================================================
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -47,55 +48,109 @@ import org.apache.http.util.EntityUtils;
 
 public class QuickStart {
 
-    public static void main(String[] args) throws Exception {
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        try {
-//        	HttpGet httpGet = new HttpGet("http://127.0.0.1:7713/sendMessage/hello/world?aaa=bbb&ccc=dddd");
-        	HttpPost httpPost = new HttpPost("http://127.0.0.1:7713/sendMessage");
-        	
-        	//httpPost.setEntity(new StringEntity("lubo je kral"));
-            	
-        	httpPost.setEntity(new StringEntity("{\"name\":\"lubo\",\"myMessage\":\"obsah spravy\"}"));
-        	
-        	/*
-        	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();  
-        	nameValuePairs.add(new BasicNameValuePair("colours[0]","red"));  
-        	nameValuePairs.add(new BasicNameValuePair("colours[1]","white"));  
-        	nameValuePairs.add(new BasicNameValuePair("colours[2]","black"));  
-        	nameValuePairs.add(new BasicNameValuePair("colours[3]","brown"));  
+	public static void sendMessage(String[] args) throws Exception {
+		// arguments to run Quick start POST:
+		// args[0] POST
+		// args[1] IPAddress of server
+		// args[2] port No.
+		// args[3] user name
+		// args[4] myMessage
+		CloseableHttpClient httpclient = HttpClients.createDefault();
 
-        	httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));        	
-        	*/
-        	
-//            CloseableHttpResponse response1 = httpclient.execute(httpGet);
-            CloseableHttpResponse response1 = httpclient.execute(httpPost);
-            // The underlying HTTP connection is still held by the response object
-            // to allow the response content to be streamed directly from the network socket.
-            // In order to ensure correct deallocation of system resources
-            // the user MUST call CloseableHttpResponse#close() from a finally clause.
-            // Please note that if response content is not fully consumed the underlying
-            // connection cannot be safely re-used and will be shut down and discarded
-            // by the connection manager.
-            try {
-                System.out.println(response1.getStatusLine());
-                HttpEntity entity1 = response1.getEntity();
-                // do something useful with the response body
-                // and ensure it is fully consumed
+		try {
+			HttpPost httpPost = new HttpPost("http://" + args[1] + ":" + args[2] + "/sendMessage");
+			// httpPost.setEntity(new StringEntity("lubo je kral"));
+			httpPost.setEntity(new StringEntity("{\"name\":\"" + args[3] + "\",\"myMessage\":\"" + args[4] + "\"}"));
+			CloseableHttpResponse response1 = httpclient.execute(httpPost);
+			// The underlying HTTP connection is still held by the response
+			// object
+			// to allow the response content to be streamed directly from the
+			// network socket.
+			// In order to ensure correct deallocation of system resources
+			// the user MUST call CloseableHttpResponse#close() from a finally
+			// clause.
+			// Please note that if response content is not fully consumed the
+			// underlying
+			// connection cannot be safely re-used and will be shut down and
+			// discarded
+			// by the connection manager.
+			try {
+				System.out.println(response1.getStatusLine());
+				HttpEntity entity1 = response1.getEntity();
 
-                
-                /*
-                 * Vypisanie odpovede do konzoly a discard dat zo serveru.
-                 */
-                
-                System.out.println( EntityUtils.toString(entity1));
-                EntityUtils.consume(entity1);
-            } finally {
-                response1.close();
-            }
-            
-        } finally {
-            httpclient.close();
-        }
-    }
+				/*
+				 * Vypisanie odpovede do konzoly a discard dat zo serveru.
+				 */
+
+				System.out.println(EntityUtils.toString(entity1));
+				EntityUtils.consume(entity1);
+			} finally {
+				response1.close();
+			}
+
+		} finally {
+			httpclient.close();
+		}
+	}
+
+	public static void getAllMessages(String[] args) throws Exception {
+		// arguments to run Quick start:
+		// args[0] GET
+		// args[1] IPAddress of server
+		// args[2] port No.
+
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+		JacksonObjectMapperToList myList = new JacksonObjectMapperToList();
+
+		try {
+			HttpGet httpGet = new HttpGet("http://" + args[1] + ":" + args[2] + "/getAllMessages");
+			CloseableHttpResponse response1 = httpclient.execute(httpGet);
+			// The underlying HTTP connection is still held by the response
+			// object
+			// to allow the response content to be streamed directly from the
+			// network socket.
+			// In order to ensure correct deallocation of system resources
+			// the user MUST call CloseableHttpResponse#close() from a finally
+			// clause.
+			// Please note that if response content is not fully consumed the
+			// underlying
+			// connection cannot be safely re-used and will be shut down and
+			// discarded
+			// by the connection manager.
+			try {
+				System.out.println(response1.getStatusLine());
+				HttpEntity entity1 = response1.getEntity();
+				String result = EntityUtils.toString(entity1);
+
+				/*
+				 * Vypisanie odpovede do konzoly a discard dat zo serveru.
+				 */
+				myList.jsonToList(result);
+				myList.PrintList();
+				EntityUtils.consume(entity1);
+			} finally {
+				response1.close();
+			}
+
+		} finally {
+			httpclient.close();
+		}
+	} 
+
+	public static void main(String[] args) throws Exception {
+
+		switch (args[0].toUpperCase()) {
+		case "POST":
+			sendMessage(args);
+			break;
+		case "GET":
+			getAllMessages(args);
+			break;
+		default: {
+			System.out.println("incorrect request format, use POST or GET");
+
+		}
+		}
+	}
 
 }

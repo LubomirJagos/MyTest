@@ -5,7 +5,7 @@ public class Address {
 	private String city;
 	private int zipcode;
 	
-	public String getStreet() {
+	publassadsdasadsaddasdsaic String getStreet() {
 		return street;
 	}
 	public void setStreet(String street) {

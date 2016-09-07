@@ -8,3 +8,5 @@ public class HelloWorld {
 		System.out.print(" Konec.");
 	}
 }
+
+/* dopisane */

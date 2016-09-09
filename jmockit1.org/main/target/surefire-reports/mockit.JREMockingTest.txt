@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: mockit.JREMockingTest
+-------------------------------------------------------------------------------
+Tests run: 37, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 2.026 sec - in mockit.JREMockingTest

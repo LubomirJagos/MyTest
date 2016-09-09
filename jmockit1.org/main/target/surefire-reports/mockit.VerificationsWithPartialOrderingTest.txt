@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: mockit.VerificationsWithPartialOrderingTest
+-------------------------------------------------------------------------------
+Tests run: 36, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.094 sec - in mockit.VerificationsWithPartialOrderingTest

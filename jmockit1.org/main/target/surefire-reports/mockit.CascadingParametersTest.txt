@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: mockit.CascadingParametersTest
+-------------------------------------------------------------------------------
+Tests run: 41, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 1.437 sec - in mockit.CascadingParametersTest

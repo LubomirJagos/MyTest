@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: mockit.StrictExpectationsTest
+-------------------------------------------------------------------------------
+Tests run: 24, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.804 sec - in mockit.StrictExpectationsTest

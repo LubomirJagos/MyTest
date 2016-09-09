@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: mockit.MockedEnumsTest
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.679 sec <<< FAILURE! - in mockit.MockedEnumsTest
+mockEnumWithValueSpecificMethods(mockit.MockedEnumsTest)  Time elapsed: 0.032 sec  <<< ERROR!
+java.lang.IllegalStateException: Missing invocation to mocked type at this point; please make sure such invocations appear only after the declaration of a suitable mock field or parameter
+	at mockit.MockedEnumsTest.mockEnumWithValueSpecificMethods(MockedEnumsTest.java:155)
+

@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: mockit.WithCaptureTest
+-------------------------------------------------------------------------------
+Tests run: 27, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.516 sec <<< FAILURE! - in mockit.WithCaptureTest
+captureArgumentsIntoListInExpectationBlock(mockit.WithCaptureTest)  Time elapsed: 0.047 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<1> but was:<0>
+	at mockit.WithCaptureTest.captureArgumentsIntoListInExpectationBlock(WithCaptureTest.java:417)
+

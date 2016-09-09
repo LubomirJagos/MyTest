@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: jmockit.tutorial.domain.MyBusinessServiceTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.042 sec <<< FAILURE! - in jmockit.tutorial.domain.MyBusinessServiceTest
+doBusinessOperationXyzWithInvalidEmailAddress(jmockit.tutorial.domain.MyBusinessServiceTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.Exception: Unexpected exception, expected<org.apache.commons.mail.EmailException> but was<java.lang.NoClassDefFoundError>
+	at jmockit.tutorial.domain.MyBusinessServiceTest.doBusinessOperationXyzWithInvalidEmailAddress(MyBusinessServiceTest.java:40)
+Caused by: java.lang.ClassNotFoundException: mockit.Expectations
+	at jmockit.tutorial.domain.MyBusinessServiceTest.doBusinessOperationXyzWithInvalidEmailAddress(MyBusinessServiceTest.java:40)
+
+doBusinessOperationXyz(jmockit.tutorial.domain.MyBusinessServiceTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NoClassDefFoundError: mockit/Expectations
+	at jmockit.tutorial.domain.MyBusinessServiceTest.doBusinessOperationXyz(MyBusinessServiceTest.java:26)
+Caused by: java.lang.ClassNotFoundException: mockit.Expectations
+	at jmockit.tutorial.domain.MyBusinessServiceTest.doBusinessOperationXyz(MyBusinessServiceTest.java:26)
+
